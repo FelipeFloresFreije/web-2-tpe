@@ -1,3 +1,4 @@
+
 TPE Parte 1 - Diario Digital
 
 Integrantes:
@@ -14,4 +15,5 @@ Se utiliza una relación 1 a N donde cada noticia pertenece a una única secció
 
 Entregables técnicos
 El diagrama de entidad relación se encuentra adjunto en el archivo "tpe.pdf".
+
 El archivo "tpe.sql" contiene el código necesario para generar la estructura de la base de datos (tablas "noticia", "seccion" y "usuario").
