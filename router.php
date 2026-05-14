@@ -1,5 +1,8 @@
 <?php
     require_once __DIR__ . '/app/controllers/noticias.controller.php';
+    require_once './app/controller/seccionController.php';
+    require_once './app/middleware/sessionMiddleware.php';
+    require_once './app/middleware/guardMiddleware.php';
 
     define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
