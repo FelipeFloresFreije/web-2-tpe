@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 18-04-2026 a las 05:08:45
+-- Tiempo de generación: 16-05-2026 a las 16:29:57
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `tpe`
+-- Base de datos: `db_tpe`
 --
 
 -- --------------------------------------------------------
@@ -59,6 +59,13 @@ CREATE TABLE `usuario` (
   `password` varchar(255) NOT NULL,
   `rol` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `usuario`
+--
+
+INSERT INTO `usuario` (`id_usuario`, `email`, `password`, `rol`) VALUES
+(1, 'webadmin', '$2y$10$1hiBq40MV9.kYpQHBvCkPuHG6RE0vdxO8zENptJTB3G.03wcdY3K.\r\n', 'admin');
 
 --
 -- Índices para tablas volcadas
@@ -103,7 +110,7 @@ ALTER TABLE `seccion`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_usuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Restricciones para tablas volcadas

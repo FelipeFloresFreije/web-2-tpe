@@ -1,0 +1,34 @@
+<form id="formNoticia" method="POST" class="border rounded p-4 bg-white shadow-sm">
+    <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+    <!-- Selección de categoría -->
+    <div class="mb-3">
+        <label for="id_categoria" class="form-label fw-bold">Seleccionar Categoría</label>
+        <select class="form-select" id="id_categoria" name="id_categoria" required>
+            <option value="">-- Elegir categoría --</option>
+            <?php foreach ($categorias as $categoria): ?>
+                <option value="<?= htmlspecialchars($categoria->id_categoria) ?>">
+                    <?= htmlspecialchars($categoria->nombre) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <!-- Campos de noticia -->
+    <div class="mb-3">
+        <label for="titulo" class="form-label fw-bold">Título de la Noticia</label>
+        <input type="text" class="form-control" id="titulo" name="titulo" placeholder="Ingrese el título" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="parrafo" class="form-label fw-bold">Contenido</label>
+        <textarea class="form-control" id="parrafo" name="parrafo" rows="5" placeholder="Escriba el contenido de la noticia..." required></textarea>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-between">
+        <button type="submit" class="btn btn-primary w-30" formaction="<?= BASE_URL . 'modificarNoticia' ?>">Modificar</button>
+        <button type="submit" class="btn btn-danger w-30" formaction="<?= BASE_URL . 'eliminarNoticia' ?>">Eliminar</button>
+        <button type="submit" class="btn btn-success w-30" formaction="<?= BASE_URL . 'agregarNoticia' ?>">Agregar</button>
+    </div>
+</form>

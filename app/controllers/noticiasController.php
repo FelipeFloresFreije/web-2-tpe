@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../models/noticias.model.php';
-require_once __DIR__ . '/../views/noticias.view.php';
-require_once __DIR__ . '/../models/seccion.model.php';
+require_once __DIR__ . '/../models/noticiasModel.php';
+require_once __DIR__ . '/../views/noticiasView.php';
+require_once __DIR__ . '/../models/seccionModel.php';
 
 class NoticiasController {
     private $model;
@@ -27,7 +27,7 @@ class NoticiasController {
         $this->view->showEditForm($secciones, $noticia);
     }
 
-    public function showAll() {
+    public function showAll($request) {
         // obtiene las noticias
         $noticias = $this->model->getAll();
 

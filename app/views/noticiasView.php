@@ -1,5 +1,4 @@
 <?php
-
 class NoticiasView {
     public function showNoticias($noticias) {
         echo("<ul>");

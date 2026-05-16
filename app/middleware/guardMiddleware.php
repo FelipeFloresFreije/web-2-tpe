@@ -1,6 +1,6 @@
 <?php
 
-    class guardMiddleware {
+    class GuardMiddleware {
         public function run($request) {
             if($request->user) {
                 return $request;

@@ -1,0 +1,36 @@
+<?php require 'header.phtml'; ?>
+<?php require 'navbar.phtml'; ?>
+<?php if ($user!=null): ?>
+<?php require 'formCategoria.phtml'; ?>
+<form method="POST" id="logoutForm">
+        <button type="submit" formaction="logout" class="btn btn-danger">Logout</button>
+</form>
+<?php endif; ?>
+<?php if ($user==null): ?>
+<?php require 'form_login.phtml'; ?>
+<?php endif; ?>
+<?php if (empty($noticias)): ?>
+    <div class="alert alert-warning text-center mt-4">
+        No hay noticias disponibles.
+    </div>
+<?php else: ?>
+    <div class="row mt-4">
+        <?php foreach ($noticias as $noticia): ?>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title text-danger fw-bold">
+                            <?= htmlspecialchars($noticia->titulo) ?>
+                        </h5>
+                        <p class="card-text"><?= nl2br(htmlspecialchars($noticia->parrafo)) ?></p>
+                    </div>
+                    <div class="card-footer text-muted text-end">
+                        <?= date('d/m/Y', strtotime($noticia->fecha ?? date('Y-m-d'))) ?>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<?php require 'footer.phtml'; ?>

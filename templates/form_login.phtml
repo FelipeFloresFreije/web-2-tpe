@@ -1,0 +1,27 @@
+<form method="POST" class="my-4" id="authForm">
+    <div class="row">
+        <div class="col-9">
+            <div class="form-group">
+                <label>Usuario</label>
+                <input required name="user" type="text" class="form-control">
+            </div>
+        </div>
+        <div class="col-9">
+            <div class="form-group">
+                <label>Contraseña</label>
+                <input required name="password" type="password" class="form-control">
+            </div>
+        </div>
+        <div class="col-9 text-danger" id="errorMsg">
+            <?php if (!empty($error)): ?>
+                <?=$error?>
+            <?php endif; ?>
+        </div>
+        <div class="col-9">
+            <!-- Asegurate de que cada botón tenga formaction correcto -->
+            <button type="submit" formaction="logearse" class="btn btn-primary mt-2">Login!</button>
+            <button type="submit" class="btn btn-secondary mt-2" formaction="do_register">Registrarse</button>
+        </div>
+    </div>
+</form>
+    

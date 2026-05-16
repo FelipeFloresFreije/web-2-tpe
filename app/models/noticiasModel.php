@@ -5,7 +5,7 @@ class NoticiasModel {
 
     public function __construct() {
         // 1. abre conexión con DB
-        $this->db = new PDO('mysql:host=localhost;dbname=tpe;charset=utf8', 'root', '');
+        $this->db = new PDO("mysql:host=".MYSQL_HOST .";dbname=".MYSQL_DB.";charset=utf8", MYSQL_USER, MYSQL_PASS);
     }
 
     public function getAll() {
@@ -20,9 +20,9 @@ class NoticiasModel {
 
     public function get($id) {
         $query = $this->db->prepare('SELECT noticia.*, seccion.nombre AS nombre_seccion
-                                     FROM noticia 
-                                     JOIN seccion ON noticia.id_seccion_fk = seccion.id_seccion
-                                     WHERE noticia.id_noticia = ?');
+                                    FROM noticia 
+                                    JOIN seccion ON noticia.id_seccion_fk = seccion.id_seccion
+                                    WHERE noticia.id_noticia = ?');
         $query->execute([$id]);
         return $query->fetch(PDO::FETCH_OBJ);
     }
@@ -37,8 +37,8 @@ class NoticiasModel {
 
 
     public function delete($id) {
-      $query = $this->db->prepare('DELETE FROM noticia WHERE id_noticia = ?');
-      $query->execute([$id]);
+        $query = $this->db->prepare('DELETE FROM noticia WHERE id_noticia = ?');
+        $query->execute([$id]);
     }    
 
     public function editar($id, $titulo, $cuerpo, $fecha, $id_seccion_fk) {

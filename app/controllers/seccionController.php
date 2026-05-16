@@ -1,47 +1,48 @@
 <?php
-
+    require_once './app/models/noticiasModel.php';
     require_once './app/model/seccionModel.php';
     require_once './app/view/secionView.php';
 
     class SeccionController{
-
+        private $noticiasModel;
         private $seccionModel;
         private $seccionView;
 
         function __construct(){
+            $this->noticiasModel = new NoticiasModel();
             $this->seccionModel = new seccionModel();
             $this->seccionView = new seccionView();
         }
 
         function showSeccion($request){
             $seccion= $this->seccionModel->getAll();
-            $noticias = $this->noticiaModel->getNoticias();
+            $noticias = $this->noticiasModel->getAll();
             $this->seccionView->showSeccion($seccion,$noticias,$request->user);
         }
+
         function mostrarSeccion($request){
-            $noticias= $this->noticiaModel->getNoticiaCategoria($request->id);
+            $noticias= $this->noticiasModel->get($request->id);
             $seccion= $this->seccionModel->getAll();
             $this->seccionView->showSeccion($seccion,$noticias,$request->user);
         }
 
         function removeSeccion($request){
             if($request->user!=null){
-            // obtengo la tarea que quiero eliminar
-            $seccion = $this->seccionModel->get($request->id);
-            //$noticias= $this->noticiaModel->getNoticiaCategoria($request->id);
-    
-            /*if ($noticias) {
-                return $this->seccionView->showError("La categoría con ID = $request->id ({$seccion->nombre}) no se puede eliminar porque tiene noticias asociadas.",$request->user);
-            }*/
+                // obtengo la tarea que quiero eliminar
+                $seccion = $this->seccionModel->get($request->id);
+                $noticias= $this->noticiasModel->get($request->id);
         
-            $this->seccionModel->remove($request->id);
-    
-            // redirijo al home
-            header('Location: ' . BASE_URL);
+                if ($noticias) {
+                    return $this->seccionView->showError("La categoría con ID = $request->id ({$seccion->nombre}) no se puede eliminar porque tiene noticias asociadas.",$request->user);
+                }
+            
+                $this->seccionModel->remove($request->id);
+        
+                // redirijo al home
+                header('Location: ' . BASE_URL);
             }else{
                 $this->seccionView->showError("no tiene los privilegios",null);
             }
-    
         }
         function agregarSeccion($request) {
             if($request->user!=null){
