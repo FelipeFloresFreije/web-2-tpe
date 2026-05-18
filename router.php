@@ -1,9 +1,10 @@
 <?php
-    
-    require_once __DIR__ . './app/controllers/noticiasController.php';
-    require_once __DIR__ . './app/controllers/seccionController.php';
-    require_once __DIR__ . './app/middleware/sessionMiddleware.php';
-    require_once __DIR__ . './app/middleware/guardMiddleware.php';
+
+    require_once './config.php';    
+    require_once './app/controllers/noticiasController.php';
+    require_once './app/controllers/seccionController.php';
+    require_once './app/middleware/sessionMiddleware.php';
+    require_once './app/middleware/guardMiddleware.php';
 
     define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 

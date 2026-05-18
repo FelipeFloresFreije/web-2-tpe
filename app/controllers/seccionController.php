@@ -1,7 +1,7 @@
 <?php
     require_once './app/models/noticiasModel.php';
-    require_once './app/model/seccionModel.php';
-    require_once './app/view/secionView.php';
+    require_once './app/models/seccionModel.php';
+    require_once './app/views/seccionView.php';
 
     class SeccionController{
         private $noticiasModel;

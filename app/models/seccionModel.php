@@ -7,7 +7,7 @@
         }
         public function getAll() {
                     
-            $query = $this->db->prepare('SELECT * FROM seccion ORDER BY orden ASC');
+            $query = $this->db->prepare('SELECT * FROM seccion ORDER BY id_seccion ASC');
             $query->execute();
             $seccion = $query->fetchAll(PDO::FETCH_OBJ);
 
