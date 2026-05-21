@@ -1,36 +1,53 @@
-<?php require 'header.phtml'; ?>
-<?php require 'navbar.phtml'; ?>
-<?php if ($user!=null): ?>
-<?php require 'formCategoria.phtml'; ?>
-<form method="POST" id="logoutForm">
-        <button type="submit" formaction="logout" class="btn btn-danger">Logout</button>
-</form>
-<?php endif; ?>
-<?php if ($user==null): ?>
-<?php require 'form_login.phtml'; ?>
-<?php endif; ?>
-<?php if (empty($noticias)): ?>
-    <div class="alert alert-warning text-center mt-4">
-        No hay noticias disponibles.
-    </div>
-<?php else: ?>
-    <div class="row mt-4">
-        <?php foreach ($noticias as $noticia): ?>
-            <div class="col-md-6 col-lg-4 mb-4">
-                <div class="card h-100 shadow-sm border-0">
-                    <div class="card-body">
-                        <h5 class="card-title text-danger fw-bold">
-                            <?= htmlspecialchars($noticia->titulo) ?>
-                        </h5>
-                        <p class="card-text"><?= nl2br(htmlspecialchars($noticia->parrafo)) ?></p>
-                    </div>
-                    <div class="card-footer text-muted text-end">
-                        <?= date('d/m/Y', strtotime($noticia->fecha ?? date('Y-m-d'))) ?>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
-    </div>
-<?php endif; ?>
+<div class="container">
 
-<?php require 'footer.phtml'; ?>
+    <main>
+        <h2>Últimas Noticias</h2>
+        
+        <?php if ($user && $user->rol === 'admin'): ?>
+            <a href="nueva-noticia" class="btn-add">➕ Agregar Nueva Noticia</a>
+        <?php endif; ?>
+
+        <?php if (empty($noticias)): ?>
+            <p>No hay noticias disponibles en este momento. ¡Crea la primera!</p>
+        <?php endif; ?>
+
+        <?php foreach ($noticias as $noticia): ?>
+            <article class="card">
+                <h3><?= $noticia->titulo ?></h3>
+                <p><?= $noticia->cuerpo ?></p>
+                <p><span class="tag">📁 <?= $noticia->nombre_seccion ?></span></p>
+                
+                <?php if ($user && $user->rol === 'admin'): ?>
+                    <div style="margin-top: 1rem;">
+                        <a href="editarNoticia/<?= $noticia->id_noticia ?>" class="btn-action btn-edit">✏️ Editar</a>
+                        <a href="eliminarNoticia/<?= $noticia->id_noticia ?>" class="btn-action btn-delete btn-confirm">❌ Eliminar</a>
+                    </div>
+                <?php endif; ?>
+            </article>
+        <?php endforeach; ?>
+    </main>
+
+    <aside>
+        <h3>Secciones</h3>
+        <?php if ($user && $user->rol === 'admin'): ?>
+            <a href="nueva-seccion" style="text-decoration:none; color: var(--admin); font-size:0.9rem;">➕ Nueva Sección</a>
+            <hr>
+        <?php endif; ?>
+
+        <ul style="list-style: none; padding: 0;">
+            <?php foreach ($secciones as $seccion): ?>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                    <a href="seccion/<?= $seccion->id_seccion ?>" style="text-decoration: none; color: var(--text); font-weight:500;"><?= $seccion->nombre ?></a>
+                    
+                    <?php if ($user && $user->rol === 'admin'): ?>
+                        <div>
+                            <a href="editarSeccion/<?= $seccion->id_seccion ?>" style="text-decoration:none;">✏️</a>
+                            <a href="eliminarSeccion/<?= $seccion->id_seccion ?>" class="btn-confirm" style="text-decoration:none;">❌</a>
+                        </div>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </aside>
+
+</div>

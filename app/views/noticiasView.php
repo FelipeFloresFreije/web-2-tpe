@@ -1,5 +1,6 @@
 <?php
-class NoticiasView {
+class noticiasView {
+    
     public function showNoticias($noticias) {
         echo("<ul>");
         foreach($noticias as $noticia) {

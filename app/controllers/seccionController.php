@@ -15,14 +15,15 @@
         }
 
         function showSeccion($request){
-            $seccion= $this->seccionModel->getAll();
+            $secciones= $this->seccionModel->getAll();
             $noticias = $this->noticiasModel->getAll();
-            $this->seccionView->showSeccion($seccion,$noticias,$request->user);
+            $user = $request->user;
+            $this->seccionView->renderIndex($noticias, $secciones, $user);
         }
 
         function mostrarSeccion($request){
             $noticias= $this->noticiasModel->get($request->id);
-            $seccion= $this->seccionModel->getAll();
+            $seccion= $this->seccionModel->get($request->id);
             $this->seccionView->showSeccion($seccion,$noticias,$request->user);
         }
 

@@ -1,14 +1,15 @@
 <?php
+    session_start();
 
     require_once './config.php';    
     require_once './app/controllers/noticiasController.php';
     require_once './app/controllers/seccionController.php';
+    require_once './app/controllers/authController.php';
     require_once './app/middleware/sessionMiddleware.php';
     require_once './app/middleware/guardMiddleware.php';
 
     define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
-    session_start();
 
     // accion por defecto
     $action = 'home';
@@ -24,12 +25,13 @@
     switch($params[0]){
             case 'home':
                 //llamo ambos getAll en categorias
+                $sessionMiddleware = new SessionMiddleware();
+                $request = $sessionMiddleware->run($request);
                 $controller = new SeccionController();
                 $controller->showSeccion($request);
                 break;
             case 'mostrarSeccion':
                 $controller = new SeccionController();
-                $request->id= $params[1];
                 $controller->mostrarSeccion($request);
                 break;
             case 'eliminarSeccion':
@@ -38,12 +40,12 @@
                 $request->id=  $_POST['id_categoria'];
                 $controller->removeSeccion($request);
                 break;
-            case 'agregarCategoria':
+            case 'agregarSeccion':
                 $request = (new GuardMiddleware())->run($request);
                 $controller = new SeccionController();
                 $controller->agregarSeccion($request);
                 break;
-            case'modificarCategoria':
+            case'modificarSeccion':
                 $request = (new GuardMiddleware())->run($request);
                 $controller = new SeccionController();
                 $request->id=  $_POST['id_categoria'];
@@ -71,18 +73,22 @@
                 $request->id=  $_POST['id_categoria'];
                 $controller->editar($request);
                 break;
-            /*case 'logearse':
+            case 'login':
                 $controller = new AuthController();
                 $controller->doLogin($request);
                 break;
-            case 'do_register':
-                $controller = new AuthController();
-                $controller->registrar($request);
+            case 'validate':
+                $authController = new AuthController();
+                $authController->doLogin($request);
                 break;
+            case 'register':
+                $authController = new AuthController();
+                $authController->registrar($request);
+                break;                
             case 'logout':
-                $controller = new AuthController();
-                $controller->logout($request);
-                break;*/
+                $authController = new AuthController();
+                $authController->logout();
+                break;
         
             default: 
                 echo "404 Page Not Found";
