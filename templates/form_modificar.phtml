@@ -7,7 +7,11 @@
  * si lo elimino me voy a dar cuenta que tira error con esos tres parametros, igualmente funcionaria*/
 ?>
 
+<<<<<<< HEAD
         <?php if ($user && $user->rol === 'admin'): ?>
+=======
+        <?php if ($user): ?>
+>>>>>>> ae645b4b078df272a78d3a874447b0ef8e3491cc
             <form action="/tp/index.php?action=modificar/<?= $id_editar ?>" method="POST">
                 <button type="submit" class="btn-add">Modificar Noticia</button>
                 <input type="text" name="editar_titulo" placeholder="Nuevo Título" required>
