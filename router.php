@@ -46,7 +46,7 @@
                 if (!empty($params[1])) {
                     $controller->show($params[1]);
                 } else {
-                    echo("Ha ingresado mal los parametros");
+                    include './templates/error.phtml';
                 }
                 break;
 
@@ -57,7 +57,7 @@
                     $id = $params[1];
                     $controller->delete($id);
                 } else {
-                    echo("Ha ingresado mal los parametros");
+                    include './templates/error.phtml';
                 }
                 break;
 
@@ -75,7 +75,7 @@
                     $id = $params[1];
                     $controller->editar($id);
                 } else {
-                    echo("Ha ingresado mal los parametros");
+                    include './templates/error.phtml';
                 }
                 break;
 
@@ -89,7 +89,7 @@
                     $id_editar = $params[1];
                     include './templates/form_modificar.phtml';
                 } else {
-                    echo("Ha ingresado mal los parametros");
+                    include './templates/error.phtml';
                 }
                 break;
 
