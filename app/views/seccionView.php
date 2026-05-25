@@ -8,7 +8,7 @@
             require_once './templates/index.phtml';
             require_once './templates/footer.phtml';
         }
-        /*
+        
         public function showSeccion($seccion, $noticias=null, $user=null) {
             $count = count($seccion);
             // NOTA: el template va a poder acceder a todas las variables y constantes que tienen alcance en esta funcion
@@ -16,5 +16,5 @@
         }
         public function showError($error,$user) {
             echo "<h1>$error</h1>";
-        }*/
+        }
     }

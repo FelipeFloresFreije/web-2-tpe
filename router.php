@@ -1,9 +1,9 @@
 <?php
     session_start();
     require_once './config.php';
-    require_once '../tp/app/middleware/sessionMiddleware.php';
-    require_once '../tp/app/controllers/authController.php';
-    require_once '../tp/app/controllers/seccionController.php';  
+    require_once './app/middleware/sessionMiddleware.php';
+    require_once './app/controllers/authController.php';
+    require_once './app/controllers/seccionController.php';  
     require_once './app/controllers/noticiasController.php';
     require_once './app/middleware/guardMiddleware.php';
     
@@ -19,7 +19,7 @@
 
     $params = explode('/', $action);
     $request = new stdClass();
-    $request = (new sessionMiddleware())->run($request);
+    $request = (new SessionMiddleware())->run($request);
     
     switch($params[0]) {
             case 'home':
@@ -28,25 +28,47 @@
                 $request = $sessionMiddleware->run($request);
                 $controller = new SeccionController();
                 $controller->showSeccion($request);
-                break;
+            break;
+
             case 'mostrarSeccion':
-                
+                $controller = new SeccionController();
+                if (!empty($params[1])) {
+                    $request->id = $params[1];
+                    $controller->mostrarSeccion($request);
+                } else {
+                    echo("Ha ingresado mal los parametros");
+                }
                 break;
+            
             case 'eliminarSeccion':
-                
+                $request = (new GuardMiddleware())->run($request);
+                $controller = new SeccionController();
+                if (!empty($params[1])) {
+                    $request->id = $params[1];
+                    $controller->removeSeccion($request);
+                } else {
+                    echo("Ha ingresado mal los parametros");
+                }
                 break;
+            
             case 'agregarSeccion':
-                
+                $request = (new GuardMiddleware())->run($request);
+                $controller = new SeccionController();
+                $controller->agregarSeccion($request);
                 break;
-            case'modificarSeccion':
-                
+            
+            case 'modificarSeccion':
+                $request = (new GuardMiddleware())->run($request);
+                $controller = new SeccionController();
+                $controller->modificarSeccion($request);
                 break;
+
             case 'mostrarNoticia':
                 $controller = new NoticiasController();
                 if (!empty($params[1])) {
                     $controller->show($params[1]);
                 } else {
-                    include './templates/error.phtml';
+                    echo("Ha ingresado mal los parametros");
                 }
                 break;
 
@@ -57,7 +79,7 @@
                     $id = $params[1];
                     $controller->delete($id);
                 } else {
-                    include './templates/error.phtml';
+                    echo("Ha ingresado mal los parametros");
                 }
                 break;
 
@@ -75,7 +97,7 @@
                     $id = $params[1];
                     $controller->editar($id);
                 } else {
-                    include './templates/error.phtml';
+                    echo("Ha ingresado mal los parametros");
                 }
                 break;
 
@@ -89,7 +111,7 @@
                     $id_editar = $params[1];
                     include './templates/form_modificar.phtml';
                 } else {
-                    include './templates/error.phtml';
+                    echo("Ha ingresado mal los parametros");
                 }
                 break;
 

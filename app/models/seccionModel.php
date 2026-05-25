@@ -13,7 +13,7 @@
 
             return $seccion;
         }
-        /*
+        
         public function get($id) {
         
             $query = $this->db->prepare('SELECT * FROM seccion WHERE id_seccion = ?');
@@ -37,5 +37,4 @@
             $query = $this->db->prepare('UPDATE seccion SET descripcion = ? , nombre = ? WHERE id_seccion = ?');
             $query->execute([$descripcion, $nombre, $id]);
         }
-        */
     }

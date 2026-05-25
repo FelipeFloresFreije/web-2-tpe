@@ -17,82 +17,32 @@
         function showSeccion($request){
             $secciones= $this->seccionModel->getAll();
             $noticias = $this->noticiasModel->getAll();
-            $user = $request->user;
-            $this->seccionView->renderIndex($noticias, $secciones, $user);
+            $this->seccionView->renderIndex($noticias, $secciones, $request->user);
         }
-/*
+
         function mostrarSeccion($request){
-            $noticias= $this->noticiasModel->get($request->id);
             $seccion= $this->seccionModel->get($request->id);
+            $noticias = $this->noticiasModel->getAll(); 
             $this->seccionView->showSeccion($seccion,$noticias,$request->user);
         }
         function removeSeccion($request){
-            if($request->user!=null){
-                // obtengo la tarea que quiero eliminar
-                $seccion = $this->seccionModel->get($request->id);
-                $noticias= $this->noticiasModel->get($request->id);
-        
-                if ($noticias) {
-                    return $this->seccionView->showError("La categoría con ID = $request->id ({$seccion->nombre}) no se puede eliminar porque tiene noticias asociadas.",$request->user);
-                }
-            
-                $this->seccionModel->remove($request->id);
-        
-                // redirijo al home
-                header('Location: ' . BASE_URL);
-            }else{
-                $this->seccionView->showError("no tiene los privilegios",null);
-            }
+            $this->seccionModel->remove($request->id);
+            header('Location: ' . BASE_URL);
         }
         function agregarSeccion($request) {
-            if($request->user!=null){
-            if (!isset($_POST['descripcion']) || empty($_POST['descripcion'])) {
-                return $this->seccionView->showError('Error: falta completar la descripcion',$request->user);
+            if (empty($_POST['nombre']) || empty($_POST['descripcion'])) {
+                return $this->seccionView->showError('Error: campos obligatorios vacíos', $request->user);
             }
     
-            if (!isset($_POST['nombre']) || empty($_POST['nombre'])) {
-                return $this->seccionView->showError('Error: falta completar el nombre',$request->user);
-            }
-    
-            // obtengo los datos del formulario
-            $descripcion = $_POST['descripcion'];
-            $nombre = $_POST['nombre'];
-    
-            $id = $this->seccionModel->insert($descripcion, $nombre);
-    
-            if (!$id) {
-                return $this->seccionView->showError('Error la insertar tarea',$request->user);
-            } 
-    
-            // redirijo al home
-            header('Location: ' . BASE_URL .'home');
-            }else{
-                $this->seccionView->showError("no tiene los privilegios",null);
-            }
+            $this->seccionModel->insert($_POST['descripcion'], $_POST['nombre']);
+            header('Location: ' . BASE_URL);
         }
         public  function modificarSeccion($request) {
-            if($request->user!=null){
-                if (!isset($_POST['id_seccion']) || empty($_POST['id_seccion'])) {
-                    return $this->seccionView->showError('Error: falta seleccionar la seccion',$request->user);
-                }
-                if (!isset($_POST['descripcion']) || empty($_POST['descripcion'])) {
-                    return $this->seccionView->showError('Error: falta completar la descripcion',$request->user);
-                }
-                if (!isset($_POST['nombre']) || empty($_POST['nombre'])) {
-                    return $this->seccionView->showError('Error: falta completar el nombre',$request->user);
-                }
-                
-                // obtengo los datos del formulario
-                $id=$_POST['id_categoria'];
-                $descripcion = $_POST['descripcion'];
-                $nombre = $_POST['nombre'];
-        
-                $this->seccionModel->modificar($id, $descripcion, $nombre);
-        
-                // redirijo al home
-                header('Location: ' . BASE_URL);
-            }else{
-                $this->seccionView->showError("no tiene los privilegios",null);
+            if (empty($_POST['id_seccion']) || empty($_POST['nombre']) || empty($_POST['descripcion'])) {
+                return $this->seccionView->showError('Error: faltan datos para modificar', $request->user);
             }
-        }*/
+    
+            $this->seccionModel->modificar($_POST['id_seccion'], $_POST['descripcion'], $_POST['nombre']);
+            header('Location: ' . BASE_URL);
+        }
     }
