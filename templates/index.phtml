@@ -1,0 +1,76 @@
+<?php
+/** @var array $noticias */
+/** @var array $secciones */
+/** @var object|null $user */
+/** Esto que escribi arriba es para que no me tire error el visual 
+ * ya que no le aparecen directamente las variables que les pasa el RenderIndex 
+ * si lo elimino me voy a dar cuenta que tira error con esos tres parametros, igualmente funcionaria*/
+?>
+
+<div class="container">
+
+    <main>
+        <h2>Últimas Noticias</h2>
+        
+        <?php if ($user): ?>
+            <form action="index.php?action=agregarNoticia" method="POST">
+                <button type="submit" class="btn-add">Agregar Noticia</button>
+                <input type="text" name="titulo" placeholder="Título" required>
+                <input type="text" name="cuerpo" placeholder="Cuerpo" required>
+                <input type="date" name="fecha" required>
+                
+                <select name="id_seccion_fk" required>
+                    <option value="">-- Elegí una sección --</option>
+                    <?php foreach ($secciones as $seccion): ?>
+                        <option value="<?= $seccion->id_seccion ?>">
+                            <?= $seccion->nombre ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </form>
+        <?php endif; ?>
+
+        <?php if (empty($noticias)): ?>
+            <p>No hay noticias disponibles en este momento. ¡Crea la primera!</p>
+        <?php endif; ?>
+
+        <?php foreach ($noticias as $noticia): ?>
+            <article class="card">
+                <h3><a href="mostrarNoticia/<?= $noticia->id_noticia ?>" style="text-decoration: none; color: inherit;"><?= $noticia->titulo ?></a></h3>
+                <p><?= $noticia->cuerpo ?></p>
+                <p><span class="tag">📁 <?= $noticia->nombre_seccion ?></span></p>
+                
+                <?php if ($user): ?>
+                    <div style="margin-top: 1rem;">
+                        <a href="modificarNoticia/<?= $noticia->id_noticia ?>" class="btn-action btn-edit">✏️ Editar</a>
+                        <a href="eliminarNoticia/<?= $noticia->id_noticia ?>" class="btn-action btn-delete btn-confirm">❌ Eliminar</a>
+                    </div>
+                <?php endif; ?>
+            </article>
+        <?php endforeach; ?>
+    </main>
+
+    <aside>
+        <h3>Secciones</h3>
+        <?php if ($user): ?>
+            <a href="nueva-seccion" style="text-decoration:none; color: var(--admin); font-size:0.9rem;">➕ Nueva Sección</a>
+            <hr>
+        <?php endif; ?>
+
+        <ul style="list-style: none; padding: 0;">
+            <?php foreach ($secciones as $seccion): ?>
+                <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+                    <a href="seccion/<?= $seccion->id_seccion ?>" style="text-decoration: none; color: var(--text); font-weight:500;"><?= $seccion->nombre ?></a>
+                    
+                    <?php if ($user): ?>
+                        <div>
+                            <a href="editarSeccion/<?= $seccion->id_seccion ?>" style="text-decoration:none;">✏️</a>
+                            <a href="eliminarSeccion/<?= $seccion->id_seccion ?>" class="btn-confirm" style="text-decoration:none;">❌</a>
+                        </div>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </aside>
+
+</div>
