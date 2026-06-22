@@ -4,22 +4,17 @@
 /** @var object|null $user */
 ?>
 
-<?php if ($user && $user->rol === 'admin'): ?>
-    <form action="modificar/<?= $id_editar ?>" method="POST">
-        
-        <input type="text" name="editar_titulo" placeholder="Nuevo Título" required>
-        <input type="text" name="editar_cuerpo" placeholder="Nuevo Cuerpo" required>
-        <input type="date" name="editar_fecha" required>
-        
-        <select name="editar_id_seccion_fk" required>
-            <option value="">-- Elegí una sección --</option>
-            <?php foreach ($secciones as $seccion): ?>
-                <option value="<?= $seccion->id_seccion ?>">
-                    <?= $seccion->nombre ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
+<form action="<?= BASE_URL ?>modificarNoticia/<?= $id_editar ?>" method="POST">
+    <input type="text" name="editar_titulo" placeholder="Nuevo Título" required>
+    <input type="text" name="editar_cuerpo" placeholder="Nuevo Cuerpo" required>
+    <input type="date" name="editar_fecha" required>
+    
+    <select name="editar_id_seccion_fk" required>
+        <option value="">-- Elegí una sección --</option>
+        <?php foreach ($secciones as $seccion): ?>
+            <option value="<?= $seccion->id_seccion ?>"><?= $seccion->nombre ?></option>
+        <?php endforeach; ?>
+    </select>
 
-        <button type="submit" class="btn-add">Modificar Noticia</button>
-    </form>
-<?php endif; ?>
+    <button type="submit">Modificar Noticia</button>
+</form>

@@ -5,22 +5,21 @@ class Model {
     protected $db;
 
     public function __construct() {
-        // Conexión inicial al servidor MySQL
         $this->db = new PDO(
             "mysql:host=" . MYSQL_HOST . ";charset=utf8", 
             MYSQL_USER, 
             MYSQL_PASS
         );
         
-        // Ejecutar el despliegue automático
+        // Ejecuto el despliegue automático
         $this->deploy();
     }
 
     private function deploy() {
-        // Crear la base de datos si no existe automáticamente
+        //Creo la base de datos si no existe automáticamente
         $this->db->query("CREATE DATABASE IF NOT EXISTS " . MYSQL_DB);
         
-        // Seleccionar la base de datos para empezar a crear las tablas
+        //Selecciono la base de datos para empezar a crear las tablas
         $this->db->query("USE " . MYSQL_DB);
 
         // Comprobar si ya existen tablas instaladas 
@@ -29,7 +28,6 @@ class Model {
         
         // Si está vacía (count == 0), creamos la estructura y cargamos los datos iniciales
         if (count($tables) == 0) {
-            // SINTAXIS HEREDOC: El cierre END; debe ir al ras del margen izquierdo
             $sql = <<<END
             -- --------------------------------------------------------
             -- Estructura de la tabla `seccion`

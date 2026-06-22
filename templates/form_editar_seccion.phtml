@@ -1,10 +1,9 @@
 <?php 
-// 1. Forzamos a PHP a mirar si hay una sesión activa en el servidor
+// 1. miro si hay sesion activa
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 2. Simplificación absoluta: Si hay datos en la sesión, el usuario entró al sistema
 $usuario_esta_adentro = !empty($_SESSION);
 
 if ($usuario_esta_adentro && isset($seccion) && $seccion): 
@@ -23,5 +22,4 @@ if ($usuario_esta_adentro && isset($seccion) && $seccion):
     </form>
 <?php else: ?>
     <h1>Acceso denegado: Debe iniciar sesión para modificar esta sección.</h1>
-    <p>Depuración rápida: Si ves esto, es porque la sesión está vacía o la sección no cargó.</p>
 <?php endif; ?>

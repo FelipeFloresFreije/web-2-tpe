@@ -70,7 +70,8 @@
 
         case 'modificarNoticia':
             $request = (new GuardMiddleware())->run($request);
-            (new NoticiasController())->cargarFormularioEditar($request);
+            $controller = new NoticiasController();
+            $controller->cargarFormularioEditar($params[1] ?? null, $request->user ?? null);
             break;
 
         case 'login':

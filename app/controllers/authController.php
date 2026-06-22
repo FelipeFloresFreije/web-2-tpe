@@ -65,7 +65,6 @@ class AuthController {
 
         $id = $this->userModel->insert($user,$password);
         if ($id === false) {
-            // Mandás el error a la vista como quieras
             return $this->view->showRegistrarse("El email ya está en uso.");
             //header('Location: register');
             exit;

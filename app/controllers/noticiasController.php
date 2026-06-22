@@ -16,42 +16,18 @@ class NoticiasController {
         $this->seccionModel = new SeccionModel();
     }
 
-    public function cargarFormularioEditar($request) {
-        if (empty($request->id)) {
+    public function cargarFormularioEditar($id, $user) {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $this->model->editar($id, $_POST['editar_titulo'], $_POST['editar_cuerpo'], $_POST['editar_fecha'], $_POST['editar_id_seccion_fk']);
             header('Location: ' . BASE_URL . 'home');
             die();
         }
-        
-
+        $id_editar = $id;
         $secciones = $this->seccionModel->getAll();
+        $noticia = $this->model->get($id); 
         include './templates/form_modificar.phtml';
     }
 
-    /*
-    public function showEditForm($id) {
-        $noticia = $this->model->get($id);
-        if (!$noticia) {
-            echo "<p>No existe la noticia con el id=$id</p>";
-            return; // para la función acá
-        }
-
-        $secciones = $this->seccionModel->getAll();
-        $this->view->showEditForm($secciones, $noticia);
-    }
-
-    public function showAll($request) {
-        // obtiene las noticias
-        $noticias = $this->model->getAll();
-
-        // envia las noticias a la vista
-        $this->view->showNoticias($noticias);
-    }
-
-    public function showForm() {
-        $secciones = $this->seccionModel->getAll(); // trae las secciones
-        $this->view->showForm($secciones);
-    }
-    */
     public function delete($id) {
         $task = $this->model->get($id);
         if (!$task) {
