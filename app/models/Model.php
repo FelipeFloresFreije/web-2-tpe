@@ -5,19 +5,19 @@ class Model {
     protected $db;
 
     public function __construct() {
-        // 1. Conexión inicial al servidor MySQL (utiliza las constantes de tu config.php) [cite: 34]
+        // Conexión inicial al servidor MySQL
         $this->db = new PDO(
             "mysql:host=" . MYSQL_HOST . ";charset=utf8", 
             MYSQL_USER, 
             MYSQL_PASS
         );
         
-        // 2. Ejecutar el despliegue automático [cite: 35]
+        // Ejecutar el despliegue automático
         $this->deploy();
     }
 
     private function deploy() {
-        // Crear la base de datos si no existe automáticamente [cite: 35]
+        // Crear la base de datos si no existe automáticamente
         $this->db->query("CREATE DATABASE IF NOT EXISTS " . MYSQL_DB);
         
         // Seleccionar la base de datos para empezar a crear las tablas
@@ -27,7 +27,7 @@ class Model {
         $query = $this->db->query('SHOW TABLES');
         $tables = $query->fetchAll();
         
-        // Si está vacía (count == 0), creamos la estructura y cargamos los datos iniciales [cite: 35]
+        // Si está vacía (count == 0), creamos la estructura y cargamos los datos iniciales
         if (count($tables) == 0) {
             // SINTAXIS HEREDOC: El cierre END; debe ir al ras del margen izquierdo
             $sql = <<<END

@@ -16,7 +16,13 @@ class NoticiasController {
         $this->seccionModel = new SeccionModel();
     }
 
-    public function cargarFormularioEditar($id_editar, $user) {
+    public function cargarFormularioEditar($request) {
+        if (empty($request->id)) {
+            header('Location: ' . BASE_URL . 'home');
+            die();
+        }
+        
+
         $secciones = $this->seccionModel->getAll();
         include './templates/form_modificar.phtml';
     }

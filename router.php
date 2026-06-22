@@ -10,141 +10,86 @@
     define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
     $action = 'home';
-
     if (!empty($_GET['action'])) {
         $action = $_GET['action'];
     }
 
     $params = explode('/', $action);
     $request = new stdClass();
+    $request->id = !empty($params[1]) ? $params[1] : null;
+    
     $request = (new SessionMiddleware())->run($request);
     
     switch($params[0]) {
         case 'home':
-            $controller = new SeccionController();
-            $controller->showSeccion($request);
+            (new SeccionController())->showSeccion($request);
             break;
 
         case 'mostrarSeccion':
-            $controller = new SeccionController();
-            if (!empty($params[1])) {
-                $request->id = $params[1];
-                $controller->mostrarSeccion($request);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new SeccionController())->mostrarSeccion($request);
             break;
         
         case 'eliminarSeccion':
             $request = (new GuardMiddleware())->run($request);
-            $controller = new SeccionController();
-            if (!empty($params[1])) {
-                $request->id = $params[1];
-                $controller->removeSeccion($request);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new SeccionController())->removeSeccion($request);
             break;
         
         case 'nueva-seccion':
             $request = (new GuardMiddleware())->run($request);
-            $controller = new SeccionController();
-            $controller->cargarFormularioSeccion($request);
+            (new SeccionController())->cargarFormularioSeccion($request);
             break;
+
         case 'agregarSeccion':
             $request = (new GuardMiddleware())->run($request);
-            $controller = new SeccionController();
-            $controller->agregarSeccion($request);
+            (new SeccionController())->agregarSeccion($request);
             break;
+
         case 'editarSeccion':
-            if (!empty($params[1])) {
-                $controller = new SeccionController();
-                $controller->cargarFormularioEditarSeccion($params[1], $request);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            $request = (new GuardMiddleware())->run($request);
+            (new SeccionController())->cargarFormularioEditarSeccion($request);
             break;
+
         case 'modificarSeccion':
-            $controller = new SeccionController();
-            $controller->modificarSeccion($request);
+            $request = (new GuardMiddleware())->run($request);
+            (new SeccionController())->modificarSeccion($request);
             break;
 
         case 'mostrarNoticia':
-            $controller = new NoticiasController();
-            if (!empty($params[1])) {
-                $controller->show($params[1]);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new NoticiasController())->show($request);
             break;
 
         case 'eliminarNoticia':
             $request = (new GuardMiddleware())->run($request);
-            $controller = new NoticiasController();
-            if (!empty($params[1])) {
-                $id = $params[1];
-                $controller->delete($id);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new NoticiasController())->delete($request);
             break;
 
         case 'agregarNoticia':
             $request = (new GuardMiddleware())->run($request);
-            $controller = new NoticiasController();
-            $controller->add();
-            break;
-
-        case 'modificar':
-            $request = (new GuardMiddleware())->run($request);
-            $controller = new NoticiasController();
-            if (!empty($params[1])) {
-                $id = $params[1];
-                $controller->editar($id);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new NoticiasController())->add();
             break;
 
         case 'modificarNoticia':
             $request = (new GuardMiddleware())->run($request);
-            if (!empty($params[1])) {
-                $controller = new NoticiasController();
-                $controller->cargarFormularioEditar($params[1], $request->user);
-            } else {
-                header('Location: ' . BASE_URL . 'home');
-                die();
-            }
+            (new NoticiasController())->cargarFormularioEditar($request);
             break;
 
         case 'login':
-            $controller = new AuthController();
-            $controller->doLogin($request);
+            (new AuthController())->doLogin($request);
             break;
 
         case 'validate':
-            $authController = new AuthController();
-            $authController->validate($request);
+            (new AuthController())->validate($request);
             break;
 
         case 'register':
-            $authController = new AuthController();
-            $authController->registrar($request);
+            (new AuthController())->registrar($request);
             break;
 
         case 'logout':
-            $authController = new AuthController();
-            $authController->logout();
+            (new AuthController())->logout();
             break;
 
         default: 
             header('Location: ' . BASE_URL . 'home');
             die();
     }
-?>

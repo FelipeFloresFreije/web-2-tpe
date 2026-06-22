@@ -32,12 +32,18 @@
             $this->seccionView->renderFormSeccion($request->user);
         }
 
-        public function cargarFormularioEditarSeccion($id_seccion, $request) {
+        public function cargarFormularioEditarSeccion($request) {
+            if (empty($request->id)) {
+                header('Location: ' . BASE_URL . 'home');
+                die();
+            }
+        
+            $noticia = $this->noticiasModel->get($request->id);
             if (session_status() === PHP_SESSION_NONE) {
                 session_start();
             }
 
-            $seccion = $this->seccionModel->get($id_seccion);
+            $seccion = $this->seccionModel->get($noticia);
             
             $user = isset($request->user) ? $request->user : (object)['logueado' => true];
 
