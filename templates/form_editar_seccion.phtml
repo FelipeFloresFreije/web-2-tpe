@@ -1,0 +1,27 @@
+<?php 
+// 1. Forzamos a PHP a mirar si hay una sesión activa en el servidor
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// 2. Simplificación absoluta: Si hay datos en la sesión, el usuario entró al sistema
+$usuario_esta_adentro = !empty($_SESSION);
+
+if ($usuario_esta_adentro && isset($seccion) && $seccion): 
+?>
+    <h2>Modificar Sección</h2>
+    <form action="<?= BASE_URL ?>modificarSeccion" method="POST">
+        <input type="hidden" name="id_seccion" value="<?= $seccion->id_seccion ?>">
+        
+        <label for="nombre">Nombre de la sección:</label>
+        <input type="text" name="nombre" id="nombre" value="<?= $seccion->nombre ?>" required>
+        
+        <label for="descripcion">Descripción:</label>
+        <input type="text" name="descripcion" id="descripcion" value="<?= $seccion->descripcion ?>" required>
+        
+        <button type="submit">Guardar Cambios</button>
+    </form>
+<?php else: ?>
+    <h1>Acceso denegado: Debe iniciar sesión para modificar esta sección.</h1>
+    <p>Depuración rápida: Si ves esto, es porque la sesión está vacía o la sección no cargó.</p>
+<?php endif; ?>

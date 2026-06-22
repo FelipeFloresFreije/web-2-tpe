@@ -1,8 +1,8 @@
 <IfModule mod_rewrite.c>
 	RewriteEngine On
+    RewriteBase /web-2-tpe/
     RewriteCond %{REQUEST_FILENAME} -f [OR]
     RewriteCond %{REQUEST_FILENAME} -d
-
     RewriteRule \.(?:css|js|jpe?g|gif|png)$ - [L]
     RewriteRule ^(.*)$ router.php?action=$1 [QSA,L]
 </IfModule>

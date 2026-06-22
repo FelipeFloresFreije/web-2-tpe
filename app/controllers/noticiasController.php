@@ -15,6 +15,12 @@ class NoticiasController {
         $this->view = new NoticiasView();
         $this->seccionModel = new SeccionModel();
     }
+
+    public function cargarFormularioEditar($id_editar, $user) {
+        $secciones = $this->seccionModel->getAll();
+        include './templates/form_modificar.phtml';
+    }
+
     /*
     public function showEditForm($id) {
         $noticia = $this->model->get($id);
@@ -53,19 +59,21 @@ class NoticiasController {
     }
     
     public function editar($id) {
-        // valida la entrada de usuario
+        //validaciones
         if (
             !isset($_POST['editar_titulo']) || empty($_POST['editar_titulo']) ||
             !isset($_POST['editar_cuerpo']) || empty($_POST['editar_cuerpo']) ||
             !isset($_POST['editar_fecha']) || empty($_POST['editar_fecha']) ||
             !isset($_POST['editar_id_seccion_fk']) || empty($_POST['editar_id_seccion_fk'])
         ) {
-            echo "Por favor, complete todos los campos.";
+            //redirigimos al home en caso de datos mal ingresados
+            header("Location: " . BASE_URL . "home");
+            die();
         } else {
-            $task = $this->model->get($id);
-            if (!$task) {
-                echo "<p>No existe la noticia con el id=$id</p>";
-                return; // para la función acá
+            $noticia = $this->model->get($id);
+            if (!$noticia) {
+                header("Location: " . BASE_URL . "home");
+                die();
             }      
 
             $titulo = $_POST['editar_titulo'];
@@ -75,7 +83,8 @@ class NoticiasController {
 
             $this->model->editar($id, $titulo, $cuerpo, $fecha, $id_seccion_fk);
 
-            header("Location: " . BASE_URL);
+            header("Location: " . BASE_URL . "home");
+            die();
         }
     }
     

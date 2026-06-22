@@ -1,0 +1,10 @@
+<?php if (isset($_SESSION['USER_EMAIL']) || (isset($user) && $user)): ?>
+    <h2>Agregar Nueva Sección</h2>
+    <form action="agregarSeccion" method="POST">
+        <input type="text" name="nombre" placeholder="Nombre de la sección" required>
+        <input type="text" name="descripcion" placeholder="Descripción" required>
+        <button type="submit">Guardar Sección</button>
+    </form>
+<?php else: ?>
+    <h1>Acceso denegado: Se requieren permisos de administrador.</h1>
+<?php endif; ?>

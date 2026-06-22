@@ -1,0 +1,25 @@
+<div style="max-width: 800px; margin: 0 auto; font-family: sans-serif;">
+    
+    <div style="border-bottom: 2px solid #ccc; margin-bottom: 20px;">
+        <h1><?= $seccion->nombre ?></h1>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 15px;">
+        <?php foreach ($noticias as $noticia): ?>
+            <?php if ($noticia->id_seccion_fk == $seccion->id_seccion): ?>
+                <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; border: 1px solid #ddd;">
+                    <h3 style="margin: 0;"><?= $noticia->titulo ?></h3>
+                    <p style="margin: 5px 0; color: #666;"><?= $noticia->cuerpo ?></p>
+                    <small style="color: #999;"><?= $noticia->fecha ?></small>
+                </div>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
+
+    <div style="margin-top: 30px;">
+        <a href="<?= BASE_URL ?>home" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+            Volver al inicio
+        </a>
+    </div>
+
+</div>

@@ -1,12 +1,6 @@
 <?php
-
-class userModel {
-    private $db;
-
-    function __construct() {
-        // 1. abro conexión con la DB
-        $this->db = new PDO("mysql:host=".MYSQL_HOST .";dbname=".MYSQL_DB.";charset=utf8", MYSQL_USER, MYSQL_PASS);                
-    }
+require_once 'app/models/Model.php';
+class userModel extends Model {
     /*
     public function get($id) {
         $query = $this->db->prepare('SELECT * FROM usuario WHERE id = ?');

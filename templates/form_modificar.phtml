@@ -2,29 +2,24 @@
 /** @var string $id_editar */
 /** @var array $secciones */
 /** @var object|null $user */
-/** Esto que escribi arriba es para que no me tire error el visual 
- * ya que no le aparecen directamente las variables que les pasa el RenderIndex 
- * si lo elimino me voy a dar cuenta que tira error con esos tres parametros, igualmente funcionaria*/
 ?>
 
-<<<<<<< HEAD
-        <?php if ($user && $user->rol === 'admin'): ?>
-=======
-        <?php if ($user): ?>
->>>>>>> ae645b4b078df272a78d3a874447b0ef8e3491cc
-            <form action="/tp/index.php?action=modificar/<?= $id_editar ?>" method="POST">
-                <button type="submit" class="btn-add">Modificar Noticia</button>
-                <input type="text" name="editar_titulo" placeholder="Nuevo Título" required>
-                <input type="text" name="editar_cuerpo" placeholder="Nuevo Cuerpo" required>
-                <input type="date" name="editar_fecha" required>
-                
-                <select name="editar_id_seccion_fk" required>
-                    <option value="">-- Elegí una sección--</option>
-                    <?php foreach ($secciones as $seccion): ?>
-                        <option value="<?= $seccion->id_seccion ?>">
-                            <?= $seccion->nombre ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </form>
-        <?php endif; ?>
+<?php if ($user && $user->rol === 'admin'): ?>
+    <form action="modificar/<?= $id_editar ?>" method="POST">
+        
+        <input type="text" name="editar_titulo" placeholder="Nuevo Título" required>
+        <input type="text" name="editar_cuerpo" placeholder="Nuevo Cuerpo" required>
+        <input type="date" name="editar_fecha" required>
+        
+        <select name="editar_id_seccion_fk" required>
+            <option value="">-- Elegí una sección --</option>
+            <?php foreach ($secciones as $seccion): ?>
+                <option value="<?= $seccion->id_seccion ?>">
+                    <?= $seccion->nombre ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+
+        <button type="submit" class="btn-add">Modificar Noticia</button>
+    </form>
+<?php endif; ?>

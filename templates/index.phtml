@@ -60,7 +60,7 @@
         <ul style="list-style: none; padding: 0;">
             <?php foreach ($secciones as $seccion): ?>
                 <li style="padding: 0.5rem 0; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
-                    <a href="seccion/<?= $seccion->id_seccion ?>" style="text-decoration: none; color: var(--text); font-weight:500;"><?= $seccion->nombre ?></a>
+                    <a href="mostrarSeccion/<?= $seccion->id_seccion ?>" style="text-decoration: none; color: var(--text); font-weight:500;"><?= $seccion->nombre ?></a>
                     
                     <?php if ($user): ?>
                         <div>
